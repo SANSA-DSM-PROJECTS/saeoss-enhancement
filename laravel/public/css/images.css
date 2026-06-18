@@ -1,0 +1,19 @@
+.images img {
+    height: 70px; 
+    max-height: 70px; 
+    width: auto; 
+}
+
+.saeossshort {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .saeosslong {
+        display: none;
+    }
+    
+    .saeossshort {
+        display: block;
+    }
+}

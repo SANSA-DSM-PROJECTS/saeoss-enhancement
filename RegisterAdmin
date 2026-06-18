@@ -1,0 +1,32 @@
+Steps to assign user to admin:
+
+=> Remove a User from the admin Role
+php artisan tinker
+
+use App\Models\User;
+
+$user = User::where('email', 'alamba@sansa.org.za')->first();
+$user->assignRole('admin');
+$user->removeRole('admin');
+
+=> Assign a Different User as Admin
+$newAdmin = User::where('email', 'alamba@sansa.org.za')->first();
+$newAdmin->assignRole('admin');
+
+=> Remove All Roles From a User
+$user = User::where('email', 'mabheka@gmail.com')->first();
+$user->syncRoles([]);
+
+=> List All Roles of a User
+$user->getRoleNames();
+
+If you have this "Spatie\Permission\Exceptions\RoleDoesNotExist  There is no role named `admin` for guard `web`."
+use Spatie\Permission\Models\Role;
+
+// Create the 'admin' role (if it doesn't exist)
+Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+
+Make sure is_admin = true
+UPDATE users SET is_admin = true WHERE email = 'alamba@sansa.org.za';
+
+

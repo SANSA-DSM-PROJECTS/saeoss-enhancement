@@ -1,0 +1,72 @@
+.footers {
+  	position: absolute;
+  	z-index: 9999;
+  	bottom: 0 !important;
+  	right: 0;
+  	border-top: 4px solid #01ae35;
+  	width: 100%;
+  	text-align: center;
+  	padding: 10px 0;
+  	color: #0a2642;
+  	background: #f8f9fa;
+  	box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.footer-content {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	max-width: 1200px;
+  	margin: 0 auto;
+  	padding: 0 15px;
+}
+
+.copyright {
+  	text-align: center;
+  	color: #6c757d;
+}
+
+.social-icons {
+  	display: flex;
+  	gap: 20px; /* This creates equal 5px spacing around each icon */
+  	justify-content: center;
+  	flex-wrap: wrap;
+}
+
+.social-icons a {
+  	color: #495057;
+  	transition: color 0.3s ease;
+  	display: inline-flex;
+  	padding: 5px; /* Ensures 5px spacing around icons */
+}
+
+.social-icons a:hover {
+  	color: #ff0000;
+}
+
+.social-icons svg {
+  	width: 18px;
+  	height: 18px;
+}
+
+/* X/Twitter icon specific styling */
+.social-icons a.x-icon:hover {
+  	color: #000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .social-icons {
+    gap: 15px;
+  }
+  
+  .social-icons svg {
+    width: 20px;
+    height: 20px;
+  }
+}

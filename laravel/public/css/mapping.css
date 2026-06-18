@@ -1,0 +1,458 @@
+#metamap {
+    position: fixed;
+	width: 100vw;
+	top: 65px;
+	height: calc(100vh - 65px);
+}
+
+#close-metadata {
+	position: absolute; 
+	top: 140px; 
+	left: 24%; 
+	z-index: 2;
+	width: 32px;
+    height: 32px;
+    background: #0a2642;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #FFF;
+    display: none;
+    font-size: 20px;
+    line-height: 16px;
+    padding: 0;
+    text-align: center;
+}
+
+.adminpage {
+    background: #0a2642;
+    color: #FFF !important;
+}
+
+.adminpage:hover {
+    background: #01ae35 !important;
+    color: #FFF;
+}
+
+#dashboard-base {
+	animation: slideInFromLeft 0.5s ease-out forwards;
+    position: absolute;
+    top: 150px;
+    padding: 0px;
+    right: 20%;
+    width: 60%;
+    box-shadow: 0 8px 8px 0 rgba(20, 164, 77, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19); 
+    border: 2px solid #0a2642;
+    display: none;
+    z-index: 9991;
+    transform: translateX(-100%);	
+}
+
+#metadata-base {
+	animation: slideInFromLeft 0.5s ease-out forwards;
+    position: absolute;
+    top: 150px;
+    padding: 0px;
+    right: 20%;
+    width: 60%;
+    border: 2px solid #0a2642;
+    display: none;
+    transform: translateX(-100%);	
+}
+
+#metadata-base .card-body {
+	padding: 20px;	
+}
+
+#metadata-base .hea {
+	padding: 20px;
+	background: #0a2642;
+	color: #14A44D;
+	border-left: 10px solid #14A44D;
+	
+    box-shadow: 0 8px 8px 0 rgba(20, 164, 77, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19); 
+	border-radius: 10px;
+	margin-bottom: 15px;
+}
+
+#metadata-base .d-flex {
+	cursor: pointer;	
+}
+
+#metadata-base .flex-fill:hover {
+	color: #FFF;	
+	font-weight: bold;
+}
+
+.zoomBtn {
+	animation: slideInFromLeft 0.5s ease-out forwards;
+    position: absolute;
+    top: 70px;
+    padding: 0px;
+    width: auto;	
+	background: transparent;
+    left: 5px;
+    border-radius: 0px;
+    border: none;
+    transform: translateX(-100%);
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19); 	
+}
+
+.zoomBtn .btn {
+	border-radius: 0px;	
+	background: #0a2642;
+    color: #FFF;
+    font-weight: bold;
+}
+
+.zoomBtn .btn:hover {
+	background: #FFF;
+    color: #0a2642;
+}
+
+#pageViewer {
+	overflow: auto;
+}
+
+.proc {
+    background: #0a2642;
+    color: #FFF;
+}
+
+.btn-conn {
+    background: #0a2642;
+    color: #FFF;
+}
+
+.btn-submit {
+    background: #FFF;
+    color: #0a2642;
+}
+
+.bg-dark.text-light {
+    background-color: #14A44D !important;  /* green background */
+    color: #0a2642 !important;             /* dark blue text */
+    margin-bottom: 5px;
+}
+
+.bg-dark.text-light .description {
+    color: #FFFFFF !important;
+    font-weight: bold;
+}
+
+.bg-dark.text-light hr.hrs {
+    width: 80%;
+    height: 3px;
+    background-color: #FFFFFF;
+    border: none;
+    margin: 10px auto;
+}
+
+.bg-light.text-dark {
+    background-color: #FFFFFF !important;  /* white background */
+    color: #14A44D !important;             /* green text */
+    margin-bottom: 5px;
+}
+
+.bg-light.text-dark .description {
+    color: #0a2642 !important;             /* dark blue text */
+    font-weight: bold;
+}
+
+.bg-light.text-dark hr.hrs {
+    width: 80%;
+    height: 3px;
+    background-color: #14A44D;
+    border: none;
+    margin: 10px auto;
+}
+
+#process-panel {
+    animation: slideInFromLeft 0.5s ease-out forwards;
+    position: absolute;
+    top: 150px;
+    padding: 0px;
+    right: 25%;
+    width: 50%;
+    border: none;
+    z-index: 99999;
+    display: none;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19);   
+}
+
+#process-panel select:focus, #process-panel select:visited, #process-panel input:focus, #process-panel input:visited  { 
+	box-shadow: none !important;
+}
+
+#search-panel .col-md-2 .d-flex .align-items-center {
+	float: right !important;
+	padding: 0px !important;
+}
+
+#search-panel {
+    animation: slideInFromLeft 0.5s ease-out forwards;
+    position: absolute;
+    top: 150px;
+    padding: 0px;
+    right: 25%;
+    width: 50%;
+    border: none;
+    display: block;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19);   
+}
+
+#upload-btn {
+	animation: slideInFromLeft 0.5s ease-out forwards;
+    position: absolute;
+    top: 70px;
+    left: 60px;
+    border-radius: 0px;
+    border: 1px solid #0a2642;
+    transform: translateX(-100%);
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19); 	
+}
+
+#harvestid {
+	border: 2px solid #FFF !important;
+}
+
+.editors {
+	float: right !important;
+}
+
+#updateMetadata .modal-content {
+	border: 2px solid #0a2642;
+}
+
+#updateMetadata label {
+	font-weight: bold;
+	color: #0a2642;
+}
+
+#updateMetadata input, #updateMetadata textarea {
+	border: 1px solid #0a2642;
+	border-radius: 5px;
+}
+
+#upload-btn .btn {
+	background: #FFF;
+	color: #0a2642;
+    border-radius: 0px;
+	font-weight: bold;
+}
+
+#upload-btn .btn:hover {
+	background: #0a2642;
+	color: #FFF;
+}
+
+#search-body {
+	height: auto;
+	overflow-y: auto;
+	overflow-x: none !important;
+	max-height: calc(100vh - 350px);
+}
+
+#clear-search {
+	z-index: 5;
+  	top: 50%; 
+  	transform: translateY(-50%); 
+  	right: 130px; 
+  	cursor: pointer;
+  	color: #dadada;
+  	display: none;
+}
+
+
+#search-panel .card-body {
+    padding: 5px;
+}
+
+#search-panel .input-group {
+    border: 2px solid #0a2642;
+}
+
+#search-panel .input-group input {
+    border: none;
+}
+
+#search-panel  .input-group-text {
+    border-radius: 0px;
+}
+
+#textpanel .input-group-text {
+	background: #0a2642;	
+	color: #FFF;
+	font-weight: bold;
+}
+
+.hiddens {
+    display: none !important;
+}
+
+#daterange, #search-body {
+    transition: all 0.3s ease;
+}
+
+#daterange {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#daterange span {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-in {
+	animation: slideInFromLeft 0.4s ease forwards;
+}
+
+.hide-card {
+	animation: fadeOutLeft 0.4s ease forwards;
+}
+
+@keyframes slideInFromLeft {
+	from { transform: translateX(-100%); opacity: 0; }
+	to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOutLeft {
+	from { opacity: 1; transform: translateX(0); }
+	to { opacity: 0; transform: translateX(-100%); }
+}
+
+.slideInFromLeft {
+	animation: slideInFromLeft 0.4s ease forwards;
+}
+
+.fadeOutLeft {
+	animation: fadeOutLeft 0.4s ease forwards;
+}
+
+#metadata-base .tab-link {
+    cursor: pointer;
+    text-align: center;
+    background-color: #14A44D;
+    color: #FFF;
+    border: 1px solid #FFF;
+}
+
+#metadata-base .tab-link.active {
+    background-color: #FFF;
+    color: #14A44D;
+    font-weight: bold;
+}
+
+#metadata-base .tab-content {
+	height: auto;
+	overflow: auto;
+	max-height: calc(100vh - 450px) ;
+}
+
+/* Custom file input styling */
+.custom-upload {
+    background: #14A44D !important; /* Let button stand out */
+    color: #FFF;
+    border: 2px solid #FFF !important;
+    padding: 0px !important;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Style the actual "Browse" button inside the input */
+.custom-upload::file-selector-button {
+    background-color: red !important;
+    color: #0a2642;
+    border: none;
+    padding: 10px !important;
+    margin-right: 10px;
+    margin-left: 0px;
+    border-radius: 0px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the Browse button */
+.custom-upload::file-selector-button:hover {
+    background-color: #0f9141; /* Slightly darker green */
+}
+
+#metadata-base input:focus, #metadata-base input:visited, #metadata-base select:visited, #metadata-base select:focus { 
+	box-shadow: none !important;
+} 
+
+/* Fade and slide out search panel */
+#search-panel.hide {
+    animation: fadeOutLeft 0.4s ease forwards;
+}
+
+#harvestMetadataDiv input, #harvestMetadataDiv select, #harvestMetadataDiv button {
+	border-radius: 0px;
+}
+
+
+
+
+
+#dashboard-base .nav-link {
+    color: #FFF;
+    background: #0a2642;
+    border: 2px solid #14A44D;
+    border-bottom: none;
+    margin-right: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#dashboard-base .nav-link:hover {
+    background: #FFF;
+    color: #0a2642;
+    border: 2px solid #0a2642;
+}
+
+#dashboard-base .nav-link.active {
+    background: #14A44D;
+    border: 2px solid #0a2642;
+    color: #0a2642;
+    font-weight: 300;
+}
+
+#dashboard-base .dataTables_wrapper .dataTables_length select {
+    width: 75px !important;
+}
+
+@keyframes fadeOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

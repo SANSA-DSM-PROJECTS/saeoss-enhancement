@@ -1,0 +1,88 @@
+apt-get update
+apt-get install -y postgis
+apt-get install -y postgresql-13-postgis-3 
+
+shp2pgsql -I -s 4326 /tmp/Wildfire/Wildfire.shp wildfire | psql -U alamba -d datastore
+
+php artisan config:clear
+php artisan config:cache
+php artisan cache:clear
+php artisan view:clear
+
+docker exec saeoss-laravel-1 php artisan cache:clear
+docker exec saeoss-laravel-1 php artisan config:clear
+docker exec saeoss-laravel-1 php artisan route:clear
+docker exec saeoss-laravel-1 php artisan view:clear
+
+php artisan requests:check-overdue
+
+UPDATE dataset
+SET name = CASE 
+    WHEN random() < 0.75 THEN -- 75% chance to change, 25% remains 'Product 1'
+        CASE floor(random() * 4)
+            WHEN 0 THEN 'Product 2'
+            WHEN 1 THEN 'Product 3'
+            WHEN 2 THEN 'Product 4'
+            ELSE 'Product 5'
+        END
+    ELSE 'Product 1' -- Keep 25% of rows unchanged
+END
+WHERE name = 'Product 1';
+
+-- For columns with pattern '___YYYYMMmea' (with underscores)
+ALTER TABLE vci RENAME COLUMN "___202201mea" TO "mea202201";
+ALTER TABLE vci RENAME COLUMN "___202202mea" TO "mea202202";
+ALTER TABLE vci RENAME COLUMN "___202203mea" TO "mea202203";
+ALTER TABLE vci RENAME COLUMN "___202204mea" TO "mea202204";
+ALTER TABLE vci RENAME COLUMN "___202205mea" TO "mea202205";
+ALTER TABLE vci RENAME COLUMN "___202206mea" TO "mea202206";
+ALTER TABLE vci RENAME COLUMN "___202207mea" TO "mea202207";
+ALTER TABLE vci RENAME COLUMN "___202208mea" TO "mea202208";
+ALTER TABLE vci RENAME COLUMN "___202209mea" TO "mea202209";
+ALTER TABLE vci RENAME COLUMN "___202210mea" TO "mea202210";
+ALTER TABLE vci RENAME COLUMN "___202211mea" TO "mea202211";
+ALTER TABLE vci RENAME COLUMN "___202212mea" TO "mea202212";
+ALTER TABLE vci RENAME COLUMN "202301mea" TO "mea202301";
+ALTER TABLE vci RENAME COLUMN "202302mea" TO "mea202302";
+ALTER TABLE vci RENAME COLUMN "202303mea" TO "mea202303";
+ALTER TABLE vci RENAME COLUMN "202304mea" TO "mea202304";
+ALTER TABLE vci RENAME COLUMN "202305mea" TO "mea202305";
+ALTER TABLE vci RENAME COLUMN "202306mea" TO "mea202306";
+ALTER TABLE vci RENAME COLUMN "202307mea" TO "mea202307";
+ALTER TABLE vci RENAME COLUMN "202308mea" TO "mea202308";
+ALTER TABLE vci RENAME COLUMN "202309mea" TO "mea202309";
+ALTER TABLE vci RENAME COLUMN "202310mea" TO "mea202310";
+ALTER TABLE vci RENAME COLUMN "202311mea" TO "mea202311";
+ALTER TABLE vci RENAME COLUMN "202312mea" TO "mea202312";
+ALTER TABLE vci RENAME COLUMN "202401mea" TO "mea202401";
+ALTER TABLE vci RENAME COLUMN "202402mea" TO "mea202402";
+ALTER TABLE vci RENAME COLUMN "202403mea" TO "mea202403";
+ALTER TABLE vci RENAME COLUMN "202404mea" TO "mea202404";
+ALTER TABLE vci RENAME COLUMN "202405mea" TO "mea202405";
+ALTER TABLE vci RENAME COLUMN "202406mea" TO "mea202406";
+ALTER TABLE vci RENAME COLUMN "202407mea" TO "mea202407";
+ALTER TABLE vci RENAME COLUMN "202408mea" TO "mea202408";
+ALTER TABLE vci RENAME COLUMN "202409mea" TO "mea202409";
+ALTER TABLE vci RENAME COLUMN "202410mea" TO "mea202410";
+ALTER TABLE vci RENAME COLUMN "202411mea" TO "mea202411";
+ALTER TABLE vci RENAME COLUMN "2024_12mea" TO "mea202412";
+ALTER TABLE vci RENAME COLUMN "2025_01mea" TO "mea202501";
+ALTER TABLE vci RENAME COLUMN "2025_02mea" TO "mea202502";
+ALTER TABLE vci RENAME COLUMN "___202301mea" TO "mea202301";
+ALTER TABLE vci RENAME COLUMN "___202302mea" TO "mea202302";
+ALTER TABLE vci RENAME COLUMN "___202303mea" TO "mea202303";
+ALTER TABLE vci RENAME COLUMN "___202304mea" TO "mea202304";
+ALTER TABLE vci RENAME COLUMN "___202305mea" TO "mea202305";
+ALTER TABLE vci RENAME COLUMN "___202306mea" TO "mea202306";
+ALTER TABLE vci RENAME COLUMN "___202307mea" TO "mea202307";
+ALTER TABLE vci RENAME COLUMN "___202308mea" TO "mea202308";
+ALTER TABLE vci RENAME COLUMN "___202309mea" TO "mea202309";
+ALTER TABLE vci RENAME COLUMN "___202310mea" TO "mea202310";
+ALTER TABLE vci RENAME COLUMN "___202311mea" TO "mea202311";
+ALTER TABLE vci RENAME COLUMN "___202312mea" TO "mea202312";
+ALTER TABLE vci RENAME COLUMN "___202401mea" TO "mea202401";
+ALTER TABLE vci RENAME COLUMN "___202402mea" TO "mea202402";
+
+docker pull nginx:stable
+docker pull php:8.2-fpm
+docker pull composer:2

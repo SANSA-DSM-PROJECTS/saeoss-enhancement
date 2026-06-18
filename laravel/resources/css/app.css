@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.spacer-between-links {
+    margin-left: auto;
+}
