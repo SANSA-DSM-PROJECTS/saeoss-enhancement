@@ -52,4 +52,5 @@ geoserver/cache/
 # OS
 .DS_Store
 Thumbs.db
+backup.sql
 
