@@ -49,7 +49,6 @@ services:
       - PRODUCTION=${GEOSERVER_PRODUCTION}
       - ENABLE_JSONP=${GEOSERVER_ENABLE_JSONP}
       - HTTP_PORT=8080
-      - HTTP_HOST=0.0.0.0
       - HTTP_HOST=10.150.16.88
       - PROXY_BASE_URL=${GEOSERVER_PROXY_BASE_URL}
       - GEOSERVER_CSRF_WHITELIST=${GEOSERVER_CSRF_WHITELIST}
@@ -90,6 +89,7 @@ services:
     command: redis-server --save "" --appendonly no --maxmemory ${REDIS_MAX_MEMORY} --maxmemory-policy ${REDIS_MAXMEMORY_POLICY}
 
   laravel:
+    container_name: saeoss
     build:
       context: ./laravel
       dockerfile: Dockerfile
@@ -136,3 +136,4 @@ volumes:
   geoserver_data:
   postgres_data:
   nginx_logs:
+  

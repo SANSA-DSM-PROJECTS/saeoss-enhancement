@@ -424,6 +424,7 @@ button.inline-flex.items-center.justify-center.p-2.rounded-md:hover {
     opacity: 1;
 }
 
+
 #analyses.active {
     visibility: visible;
     opacity: 1;
@@ -1159,24 +1160,3 @@ input[type="range"].vci-sliders::-ms-thumb {
 	color: red;
 	padding: 5px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

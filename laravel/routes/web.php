@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DataUpload;
 use App\Http\Controllers\GeoServerController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MetadataManualController;
@@ -9,7 +8,6 @@ use App\Http\Controllers\MetadataHarvestController;
 use App\Http\Controllers\MetadataUploadController;
 use App\Http\Controllers\MetadataController;
 use App\Http\Controllers\OrganisationController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordResetLinkController;
 use App\Http\Controllers\NewPasswordController;
 use Illuminate\Support\Facades\Http;
@@ -73,32 +71,48 @@ Route::get('/metadata', [MetadataController::class, 'index'])->name('metadata');
 | Organisation Routes
 |--------------------------------------------------------------------------
 */
-// View by identifier (keep this for API/internal use)
+
+// ==================== API ROUTES (Must come first) ====================
+// These should be in routes/api.php ideally, but since you're using web.php:
+Route::prefix('api')->group(function () {
+    Route::get('/organisations', [OrganisationController::class, 'getOrganisations'])->name('api.organisations');
+    Route::get('/organisations/{identifier}', [OrganisationController::class, 'show'])->name('api.organisations.show');
+});
+
+// ==================== MEMBER ROUTES ====================
+// Member management routes (must come before the catch-all routes)
+Route::prefix('organisation')->group(function () {
+    Route::get('/{identifier}/available-users', [OrganisationController::class, 'getAvailableUsers']);
+    Route::get('/{identifier}/members', [OrganisationController::class, 'getMembers']);
+    Route::post('/{identifier}/members', [OrganisationController::class, 'addMember']);
+    Route::delete('/{identifier}/members/{userId}', [OrganisationController::class, 'removeMember']);
+    Route::put('/{identifier}/members/{userId}/role', [OrganisationController::class, 'updateMemberRole']);
+});
+
+// ==================== VIEW ROUTES ====================
+// View by identifier (for internal use)
 Route::get('/organisation/id/{identifier}', [OrganisationController::class, 'viewOrganisation'])
     ->name('organisation.view.byId');
 
-// View by name - THIS IS THE MAIN USER-FACING ROUTE
+// View by name - MAIN USER-FACING ROUTE (must be last)
 Route::get('/organisation/{organisationName}', [OrganisationController::class, 'viewOrganisationByName'])
     ->name('organisation.view');
 
-// API routes
-Route::get('/api/organisations', [OrganisationController::class, 'getOrganisations'])->name('api.organisations');
-Route::get('/api/organisations/{identifier}', [OrganisationController::class, 'show'])->name('api.organisations.show');
-
-// Other routes
+// ==================== OTHER ROUTES ====================
 Route::get('/organisation', [OrganisationController::class, 'index'])->name('organisation');
 Route::post('/organisations/store', [OrganisationController::class, 'store'])->name('organisations.store');
-Route::get('/debug/organisation-match/{name}', [OrganisationController::class, 'debugOrganisationMatch']);
 
+// ==================== DEBUG ROUTES ====================
+Route::get('/debug/organisation-match/{name}', [OrganisationController::class, 'debugOrganisationMatch']);
 /*
 |--------------------------------------------------------------------------
 | User Management Routes
 |--------------------------------------------------------------------------
-*/
+*
 Route::get('/users/list', [UserController::class, 'index']);
 Route::post('/users/update-role/{user}', [UserController::class, 'updateRole']);
 
-/*
+*
 |--------------------------------------------------------------------------
 | View Routes
 |--------------------------------------------------------------------------
@@ -122,7 +136,7 @@ Route::get('/add-records', function () {
 |--------------------------------------------------------------------------
 | Data Upload Routes
 |--------------------------------------------------------------------------
-*/
+*
 Route::post('/upload-data', [DataUpload::class, 'uploaddata'])->name('upload.data');
 
 /*

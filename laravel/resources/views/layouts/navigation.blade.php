@@ -1,43 +1,51 @@
-<nav x-data="{ open: false }" class="top border-gray-100" style="background-color: #0a2642;">
+<nav x-data="{ open: false }" class="border-gray-100" style="background-color: #0a2642; height: 70px; min-height: 70px;">
     <!-- Primary Navigation Menu -->
-    <div class="container-fluid px-4">
-        <div class="flex justify-between h-16">
+    <div class="container-fluid px-4 h-full">
+        <div class="flex justify-between items-center h-full">
             <!-- Logo on the left -->
-            <div class="flex items-center">
+            <div class="flex items-center h-full">
                 <div class="images shrink-0 flex items-center navbar-logo">
-                    <a href="/" target="_blank" class="flex items-center">
-                        <img src="{{ asset('images/saeoss-logo.png') }}" alt="saeoss Logo">
+                    <a href="/" class="flex items-center h-full">
+                        <img src="{{ asset('images/saeoss-logo.png') }}" alt="saeoss Logo" style="max-height: 70px; width: auto;">
                     </a>
                 </div>
             </div>
 
-            <!-- Center Navigation Links -->
-            <div class="hidden sm:flex sm:items-center sm:justify-center sm:absolute sm:left-0 sm:right-0">
-                <div class="flex space-x-8">
-                    <x-nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')" class="text-white">
+            <!-- Center Navigation Links - Vertically Centered -->
+            <div class="hidden sm:flex sm:items-center sm:justify-center sm:absolute sm:left-0 sm:right-0" style="height: 70px; pointer-events: none;">
+                <div class="flex space-x-8 items-center h-full" style="pointer-events: auto;">
+                    <a href="{{ route('welcome') }}" 
+                       class="text-white hover:text-blue-300 font-medium transition duration-150 {{ request()->routeIs('welcome') ? 'text-blue-300 border-b-2 border-blue-300' : '' }}" 
+                       style="color: white !important; text-decoration: none; padding: 4px 0; display: inline-flex; align-items: center; height: 100%;">
                         {{ __('Home') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('mapping') }}" :active="request()->routeIs('mapping')" class="text-white">
+                    </a>
+                    <a href="{{ route('mapping') }}" 
+                       class="text-white hover:text-blue-300 font-medium transition duration-150 {{ request()->routeIs('mapping') ? 'text-blue-300 border-b-2 border-blue-300' : '' }}" 
+                       style="color: white !important; text-decoration: none; padding: 4px 0; display: inline-flex; align-items: center; height: 100%;">
                         {{ __('Mapping') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('metadata') }}" :active="request()->routeIs('metadata')" class="text-white">
+                    </a>
+                    <a href="{{ route('metadata') }}" 
+                       class="text-white hover:text-blue-300 font-medium transition duration-150 {{ request()->routeIs('metadata') ? 'text-blue-300 border-b-2 border-blue-300' : '' }}" 
+                       style="color: white !important; text-decoration: none; padding: 4px 0; display: inline-flex; align-items: center; height: 100%;">
                         {{ __('Metadata') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('organisation') }}" :active="request()->routeIs('organisation')" class="text-white">
+                    </a>
+                    <a href="{{ route('organisation') }}" 
+                       class="text-white hover:text-blue-300 font-medium transition duration-150 {{ request()->routeIs('organisation') ? 'text-blue-300 border-b-2 border-blue-300' : '' }}" 
+                       style="color: white !important; text-decoration: none; padding: 4px 0; display: inline-flex; align-items: center; height: 100%;">
                         {{ __('Organisation') }}
-                    </x-nav-link>
+                    </a>
                 </div>
             </div>
 
             <!-- Right Side Of Navbar -->
-            <div class="flex cust items-center">
+            <div class="flex items-center h-full">
                 @auth
                     <!-- Settings Dropdown -->
-                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <div class="hidden sm:flex sm:items-center sm:ml-6 h-full">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md 
-                                               text-white bg-transparent hover:text-gray-200 focus:outline-none 
+                                               text-white bg-transparent hover:bg-blue-900 focus:outline-none 
                                                transition ease-in-out duration-150">
                                     <div class="px-4 text-left">
                                         <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
@@ -79,21 +87,25 @@
 
                 @guest
                     <!-- Login/Register Links -->
-                    <div class="hidden sm:flex sm:items-center sm:space-x-4 sm:ml-6">
-                        <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')" class="text-white">
+                    <div class="hidden sm:flex sm:items-center sm:space-x-4 sm:ml-6 h-full">
+                        <a href="{{ route('login') }}" 
+                           class="text-white hover:text-blue-300 font-medium transition duration-150 {{ request()->routeIs('login') ? 'text-blue-300 border-b-2 border-blue-300' : '' }}" 
+                           style="color: white !important; text-decoration: none; padding: 4px 0; display: inline-flex; align-items: center; height: 100%;">
                             {{ __('Login') }}
-                        </x-nav-link>
-                        <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')" class="text-white">
+                        </a>
+                        <a href="{{ route('register') }}" 
+                           class="text-white hover:text-blue-300 font-medium transition duration-150 {{ request()->routeIs('register') ? 'text-blue-300 border-b-2 border-blue-300' : '' }}" 
+                           style="color: white !important; text-decoration: none; padding: 4px 0; display: inline-flex; align-items: center; height: 100%;">
                             {{ __('Register') }}
-                        </x-nav-link>
+                        </a>
                     </div>
                 @endguest
 
                 <!-- Hamburger -->
-                <div class="-mr-2 flex items-center sm:hidden">
+                <div class="-mr-2 flex items-center sm:hidden h-full">
                     <button @click="open = ! open"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 
-                               hover:text-gray-200 hover:bg-gray-700 focus:outline-none transition">
+                        class="inline-flex items-center justify-center p-2 rounded-md text-white 
+                               hover:text-blue-300 hover:bg-blue-900 focus:outline-none transition">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path :class="{'hidden': open, 'inline-flex': ! open }" 
                                   class="inline-flex" 
@@ -117,18 +129,26 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden" style="background-color: #0a2642;">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')" class="text-white">
+            <a href="{{ route('welcome') }}" 
+               class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150 {{ request()->routeIs('welcome') ? 'text-blue-300 border-l-4 border-blue-300' : '' }}" 
+               style="color: white !important; text-decoration: none;">
                 {{ __('Home') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('mapping') }}" :active="request()->routeIs('mapping')" class="text-white">
+            </a>
+            <a href="{{ route('mapping') }}" 
+               class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150 {{ request()->routeIs('mapping') ? 'text-blue-300 border-l-4 border-blue-300' : '' }}" 
+               style="color: white !important; text-decoration: none;">
                 {{ __('Mapping') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('metadata') }}" :active="request()->routeIs('metadata')" class="text-white">
+            </a>
+            <a href="{{ route('metadata') }}" 
+               class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150 {{ request()->routeIs('metadata') ? 'text-blue-300 border-l-4 border-blue-300' : '' }}" 
+               style="color: white !important; text-decoration: none;">
                 {{ __('Metadata') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('organisation') }}" :active="request()->routeIs('organisation')" class="text-white">
+            </a>
+            <a href="{{ route('organisation') }}" 
+               class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150 {{ request()->routeIs('organisation') ? 'text-blue-300 border-l-4 border-blue-300' : '' }}" 
+               style="color: white !important; text-decoration: none;">
                 {{ __('Organisation') }}
-            </x-responsive-nav-link>
+            </a>
         </div>
 
         @auth
@@ -141,21 +161,27 @@
 
                 <div class="mt-3 space-y-1">
                     @if(auth()->user()->is_admin ?? false) 
-                        <x-responsive-nav-link href="{{ route('dashboard') }}" class="text-white">
+                        <a href="{{ route('dashboard') }}" 
+                           class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150" 
+                           style="color: white !important; text-decoration: none;">
                             {{ __('Dashboard') }}
-                        </x-responsive-nav-link>
+                        </a>
                     @endif
                     
-                    <x-responsive-nav-link href="{{ route('profile.edit') }}" :active="request()->routeIs('profile.edit')" class="text-white">
+                    <a href="{{ route('profile.edit') }}" 
+                       class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150 {{ request()->routeIs('profile.edit') ? 'text-blue-300 border-l-4 border-blue-300' : '' }}" 
+                       style="color: white !important; text-decoration: none;">
                         {{ __('Profile') }}
-                    </x-responsive-nav-link>
+                    </a>
                     
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <x-responsive-nav-link href="{{ route('logout') }}" class="text-white"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
+                        <a href="{{ route('logout') }}" 
+                           class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150" 
+                           style="color: white !important; text-decoration: none;"
+                           onclick="event.preventDefault(); this.closest('form').submit();">
                             {{ __('Log Out') }}
-                        </x-responsive-nav-link>
+                        </a>
                     </form>
                 </div>
             </div>
@@ -165,12 +191,16 @@
             <!-- Guest Menu -->
             <div class="pt-4 pb-4 border-t border-gray-700">
                 <div class="space-y-1">
-                    <x-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')" class="text-white">
+                    <a href="{{ route('login') }}" 
+                       class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150 {{ request()->routeIs('login') ? 'text-blue-300 border-l-4 border-blue-300' : '' }}" 
+                       style="color: white !important; text-decoration: none;">
                         {{ __('Login') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')" class="text-white">
+                    </a>
+                    <a href="{{ route('register') }}" 
+                       class="block pl-3 pr-4 py-2 text-base font-medium text-white hover:text-blue-300 hover:bg-blue-900 transition duration-150 {{ request()->routeIs('register') ? 'text-blue-300 border-l-4 border-blue-300' : '' }}" 
+                       style="color: white !important; text-decoration: none;">
                         {{ __('Register') }}
-                    </x-responsive-nav-link>
+                    </a>
                 </div>
             </div>
         @endguest

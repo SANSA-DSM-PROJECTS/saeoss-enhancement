@@ -29,7 +29,7 @@
             </div>
             <div class="actions">
                 <button class="btn-back" onclick="window.location.href='/metadata'">
-                    <i class="bi bi-arrow-left"></i> Back
+                    <i class="bi bi-arrow-left"></i> Metadata
                 </button>
                 <button id="editButton" class="btn-edit action-btn-hidden" onclick="editMetadata()">
                     <i class="bi bi-pencil"></i> Edit
@@ -111,28 +111,74 @@
                 <div>
                     <div class="card">
                         <h3>
-                            <i class="bi bi-building"></i> Organization
+                            Organization
                         </h3>
+                        
+                        {{-- Get organization using the Model method --}}
+                        @php
+                            $organisation = \App\Models\Organisation::findFromMetadata($metadata);
+                            $orgName = $metadata['owner'] ?? $metadata['organization'] ?? 'Unknown Organization';
+                        @endphp
+                        
                         <div class="info-item">
                             <strong><i class="bi bi-building"></i> Name</strong>
-                            <div>{{ $metadata['organization'] ?? 'Unknown Organization' }}</div>
+                            <div>{{ $orgName }}</div>
                         </div>
-                        <div class="info-item">
-                            <strong><i class="bi bi-person-badge"></i> Role</strong>
-                            <div>Data Provider / Publisher</div>
-                        </div>
-                        <div class="info-item">
-                            <strong><i class="bi bi-envelope"></i> Contact Email</strong>
-                            <div>
-                                <a href="mailto:{{ $metadata['contact_email'] ?? '' }}" style="color: var(--primary);">
-                                    <i class="bi bi-envelope"></i> {{ $metadata['contact_email'] ?? 'Not provided' }}
-                                </a>
+                        
+                        @if($organisation)
+                            <div class="info-item">
+                                <strong> Organization Description</strong>
+                                <div>{{ $organisation->description ?? 'Not Provided' }}</div>
                             </div>
-                        </div>
-                        <div class="info-item">
-                            <strong><i class="bi bi-telephone"></i> Contact Phone</strong>
-                            <div>{{ $metadata['contact_phone'] ?? 'Not provided' }}</div>
-                        </div>
+                            
+                            <div class="info-item">
+                                <strong>Director</strong>
+                                <div>{{ $organisation->director ?? 'Not Provided' }}</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <strong> Email Address</strong>
+                                <div>
+                                    @if($organisation->contact_email)
+                                        <a href="mailto:{{ $organisation->contact_email }}" style="color: var(--primary);">
+                                            {{ $organisation->contact_email }}
+                                        </a>
+                                    @else
+                                        Not provided
+                                    @endif
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <strong> Contact Phone</strong>
+                                <div>{{ $organisation->contact_phone ?? 'Not provided' }}</div>
+                            </div>
+                            
+                            @if($organisation->website)
+                                <div class="info-item">
+                                    <strong><i class="bi bi-globe"></i> Website</strong>
+                                    <div>
+                                        <a href="{{ $organisation->getFormattedWebsite() }}" target="_blank" style="color: var(--primary);" rel="noopener noreferrer">
+                                            <i class="bi bi-box-arrow-up-right"></i> {{ $organisation->getDisplayWebsite() }}
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
+                        @elseif($orgName !== 'Unknown Organization')
+                            <div class="info-item">
+                                <div class="alert alert-info" style="padding: 10px; background: #e3f2fd; border-radius: 5px; margin-top: 10px;">
+                                    <i class="bi bi-info-circle"></i> 
+                                    This metadata is owned by "{{ $orgName }}" but the organisation profile is not yet available in the system.
+                                </div>
+                            </div>
+                        @else
+                            <div class="info-item">
+                                <div class="alert alert-warning" style="padding: 10px; background: #fff3cd; border-radius: 5px; margin-top: 10px;">
+                                    <i class="bi bi-exclamation-triangle"></i> 
+                                    No organization information is available for this metadata record.
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="card" style="margin-top: 20px;">
@@ -155,6 +201,12 @@
                             <strong><i class="bi bi-arrow-repeat"></i> Update Frequency</strong>
                             <div>As needed</div>
                         </div>
+                        @if(isset($metadata['license']))
+                            <div class="info-item">
+                                <strong><i class="bi bi-shield-check"></i> License</strong>
+                                <div>{{ $metadata['license'] }}</div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -201,17 +253,17 @@
         </div>
     </div>
 
-    <!-- Pass PHP data to JavaScript via data attributes OR map will not display -->
+    <!-- Pass PHP data to JavaScript via data attributes -->
     <div id="metadata-data" 
          data-metadata-id="{{ $metadata['identifier'] ?? '' }}"
          data-metadata='@json($metadata)'
-         data-is-admin="{{ auth()->check() && auth()->user()->hasRole('admin') ? 'true' : 'false' }}"
+         data-is-admin="{{ auth()->check() && auth()->user()->is_admin ? 'true' : 'false' }}"
          data-user-organisation="{{ auth()->check() ? auth()->user()->organisation : '' }}"
-         data-metadata-organisation="{{ $metadata['organization'] ?? '' }}"
-         data-north="{{ $metadata['extent']['north'] ?? $metadata['max_lat'] ?? '' }}"
-         data-south="{{ $metadata['extent']['south'] ?? $metadata['min_lat'] ?? '' }}"
-         data-east="{{ $metadata['extent']['east'] ?? $metadata['max_lon'] ?? '' }}"
-         data-west="{{ $metadata['extent']['west'] ?? $metadata['min_lon'] ?? '' }}"
+         data-metadata-owner="{{ $metadata['owner'] ?? $metadata['organization'] ?? '' }}"
+         data-north="{{ $metadata['max_lat'] ?? $metadata['extent']['north'] ?? '' }}"
+         data-south="{{ $metadata['min_lat'] ?? $metadata['extent']['south'] ?? '' }}"
+         data-east="{{ $metadata['max_lon'] ?? $metadata['extent']['east'] ?? '' }}"
+         data-west="{{ $metadata['min_lon'] ?? $metadata['extent']['west'] ?? '' }}"
          data-csrf-token="{{ csrf_token() }}"
          style="display: none;">
     </div>

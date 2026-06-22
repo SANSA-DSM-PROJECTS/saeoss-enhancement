@@ -681,14 +681,25 @@ body {
     font-weight: 600;
 }
 
+/* Member role styles */
 .role-admin {
-    background: #0a2642;
+    background: #2c3e50;
+    color: white;
+}
+
+.role-editor {
+    background: #3498db;
+    color: white;
+}
+
+.role-publisher {
+    background: #9b59b6;
     color: white;
 }
 
 .role-member {
-    background: #e2edf2;
-    color: #2c4c6e;
+    background: #eef2f7;
+    color: #4a5568;
 }
 
 .add-member {

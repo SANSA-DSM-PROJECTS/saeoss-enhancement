@@ -202,35 +202,10 @@
                         <div class="members-list">
                             <h3 style="margin-bottom: 1rem; color: #0a2642;">Organisation Members</h3>
                             <div id="membersList">
-                                <div class="member-item">
-                                    <div class="member-info">
-                                        <div class="member-avatar">JD</div>
-                                        <div>
-                                            <div class="member-name">John Doe</div>
-                                            <div class="member-email">john.doe@example.com</div>
-                                        </div>
-                                    </div>
-                                    <span class="member-role role-admin">Admin</span>
-                                </div>
-                                <div class="member-item">
-                                    <div class="member-info">
-                                        <div class="member-avatar">JS</div>
-                                        <div>
-                                            <div class="member-name">Jane Smith</div>
-                                            <div class="member-email">jane.smith@example.com</div>
-                                        </div>
-                                    </div>
-                                    <span class="member-role role-member">Member</span>
-                                </div>
-                                <div class="member-item">
-                                    <div class="member-info">
-                                        <div class="member-avatar">MB</div>
-                                        <div>
-                                            <div class="member-name">Mike Brown</div>
-                                            <div class="member-email">mike.brown@example.com</div>
-                                        </div>
-                                    </div>
-                                    <span class="member-role role-member">Member</span>
+                                <!-- Members will be dynamically loaded here -->
+                                <div class="loading-members" style="text-align: center; padding: 2rem;">
+                                    <i class="fas fa-spinner fa-spin" style="font-size: 1.5rem;"></i>
+                                    <p>Loading members...</p>
                                 </div>
                             </div>
                             <div class="add-member">

@@ -4,22 +4,29 @@ const metadataId = dataContainer.dataset.metadataId;
 const csrfToken = dataContainer.dataset.csrfToken;
 const metadataData = JSON.parse(dataContainer.dataset.metadata);
 const isAdmin = dataContainer.dataset.isAdmin === 'true';
-const userOrganisation = dataContainer.dataset.userOrganisation;
-const metadataOrganisation = dataContainer.dataset.metadataOrganisation;
-const north = dataContainer.dataset.north ? parseFloat(dataContainer.dataset.north) : null;
-const south = dataContainer.dataset.south ? parseFloat(dataContainer.dataset.south) : null;
-const east = dataContainer.dataset.east ? parseFloat(dataContainer.dataset.east) : null;
-const west = dataContainer.dataset.west ? parseFloat(dataContainer.dataset.west) : null;
+const userOrganisation = dataContainer.dataset.userOrganisation || '';
+
+// Get the owner from metadata - try both 'owner' and 'organization' fields
+const metadataOwner = dataContainer.dataset.metadataOwner || 
+                     metadataData.owner || 
+                     metadataData.organization || 
+                     '';
 
 // User permission data
 const currentUser = {
     isAdmin: isAdmin,
     userOrganisation: userOrganisation,
-    metadataOrganisation: metadataOrganisation
+    metadataOwner: metadataOwner
 };
 
 console.log('User permissions:', currentUser);
-console.log('Extent values:', {north, south, east, west});
+console.log('Metadata data:', metadataData);
+console.log('Extent values:', {
+    north: dataContainer.dataset.north,
+    south: dataContainer.dataset.south,
+    east: dataContainer.dataset.east,
+    west: dataContainer.dataset.west
+});
 
 let map, vectorSource, vectorLayer, currentFeature;
 
@@ -31,7 +38,8 @@ function checkUserPermissions() {
     // User is admin OR user belongs to the same organisation that owns the metadata
     const canModify = currentUser.isAdmin || 
                      (currentUser.userOrganisation && 
-                      currentUser.userOrganisation === currentUser.metadataOrganisation);
+                      currentUser.metadataOwner && 
+                      currentUser.userOrganisation.toLowerCase() === currentUser.metadataOwner.toLowerCase());
     
     if (canModify) {
         // Show the buttons by removing the hidden class
@@ -46,15 +54,15 @@ function checkUserPermissions() {
     }
 }
 
-// Initialize Map - Fixed for OpenLayers v7.4.0
+// Initialize Map
 function initMap() {
-    // Create vector source and layer with transparent fill (0.3 opacity)
+    // Create vector source and layer with transparent fill
     vectorSource = new ol.source.Vector();
     vectorLayer = new ol.layer.Vector({
         source: vectorSource,
         style: new ol.style.Style({
             fill: new ol.style.Fill({
-                color: 'rgba(26, 86, 219, 0.3)' // 0.3 transparent blue fill
+                color: 'rgba(26, 86, 219, 0.3)'
             }),
             stroke: new ol.style.Stroke({
                 color: '#1a56db',
@@ -87,6 +95,10 @@ function initMap() {
 // Load geometry from bounding box
 function loadGeometryFromExtent() {
     const statusDiv = document.getElementById('mapStatus');
+    const north = dataContainer.dataset.north ? parseFloat(dataContainer.dataset.north) : null;
+    const south = dataContainer.dataset.south ? parseFloat(dataContainer.dataset.south) : null;
+    const east = dataContainer.dataset.east ? parseFloat(dataContainer.dataset.east) : null;
+    const west = dataContainer.dataset.west ? parseFloat(dataContainer.dataset.west) : null;
     
     // Check if we have valid extent values
     if (west !== null && south !== null && east !== null && north !== null && 
@@ -130,12 +142,17 @@ function loadGeometryFromExtent() {
     } else {
         statusDiv.innerHTML = '<i class="bi bi-info-circle"></i> No spatial extent data available for this record';
         statusDiv.style.color = '#f59e0b';
-        console.log('Extent values:', {west, south, east, north});
+        console.log('Extent values not available');
     }
 }
 
 // Zoom to feature extent
 function zoomToFeature() {
+    const north = dataContainer.dataset.north ? parseFloat(dataContainer.dataset.north) : null;
+    const south = dataContainer.dataset.south ? parseFloat(dataContainer.dataset.south) : null;
+    const east = dataContainer.dataset.east ? parseFloat(dataContainer.dataset.east) : null;
+    const west = dataContainer.dataset.west ? parseFloat(dataContainer.dataset.west) : null;
+    
     if (currentFeature) {
         const extent = currentFeature.getGeometry().getExtent();
         map.getView().fit(extent, {
@@ -187,7 +204,7 @@ function resetView() {
 
 // CRUD Operations
 function editMetadata() {
-    if (!currentUser.isAdmin && currentUser.userOrganisation !== currentUser.metadataOrganisation) {
+    if (!currentUser.isAdmin && currentUser.userOrganisation !== currentUser.metadataOwner) {
         alert('You do not have permission to edit this metadata.');
         return;
     }
@@ -196,7 +213,7 @@ function editMetadata() {
 }
 
 function deleteMetadata() {
-    if (!currentUser.isAdmin && currentUser.userOrganisation !== currentUser.metadataOrganisation) {
+    if (!currentUser.isAdmin && currentUser.userOrganisation !== currentUser.metadataOwner) {
         alert('You do not have permission to delete this metadata.');
         return;
     }
