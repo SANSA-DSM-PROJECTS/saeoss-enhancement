@@ -14,6 +14,8 @@ services:
       - nginx_logs:/var/log/nginx
       - ./logs/nginx:/var/log/nginx
     restart: unless-stopped
+    networks:
+      - saeoss_network
     deploy:
       resources:
         limits:
@@ -53,6 +55,8 @@ services:
       - PROXY_BASE_URL=${GEOSERVER_PROXY_BASE_URL}
       - GEOSERVER_CSRF_WHITELIST=${GEOSERVER_CSRF_WHITELIST}
     restart: unless-stopped
+    networks:
+      - saeoss_network
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/geoserver || exit 1"]
       interval: ${HEALTHCHECK_INTERVAL}
@@ -63,6 +67,8 @@ services:
     image: postgis/postgis:15-3.3
     container_name: postgres
     restart: unless-stopped
+    networks:
+      - saeoss_network
     environment:
       - POSTGRES_HOST_AUTH_METHOD=${POSTGRES_HOST_AUTH_METHOD}
       - POSTGRES_DB=${POSTGRES_DB}
@@ -81,6 +87,8 @@ services:
     image: redis:alpine
     container_name: redis
     restart: unless-stopped
+    networks:
+      - saeoss_network
     deploy:
       resources:
         limits:
@@ -108,7 +116,8 @@ services:
     depends_on:
       - postgres
       - redis
-    
+    networks:
+      - saeoss_network
     labels:
       - "com.docker.compose.service=laravel"
       - "com.docker.compose.container-number=${COMPOSE_REPLICA}"
@@ -129,11 +138,17 @@ services:
       bash -c "php artisan config:cache
       && php artisan route:cache
       && php artisan view:cache
-      && php artisan migrate --force
       && php-fpm"
 
 volumes:
   geoserver_data:
   postgres_data:
   nginx_logs:
+
+networks:
+    saeoss_network:
+        driver: bridge
+        driver_opts:
+          com.docker.network.driver.mtu: 1450
+
   
